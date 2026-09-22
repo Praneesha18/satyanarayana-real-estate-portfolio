@@ -1,0 +1,273 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.hero {
+  position: relative;
+  padding-top: calc($header-height + 3.5rem);
+  padding-bottom: 5rem;
+  background: linear-gradient(175deg, #FFFFFF 0%, $color-primary-subtle 60%, #F1F5F9 100%);
+  overflow: hidden;
+
+  @include mobile {
+    padding-top: calc($header-height + 2rem);
+    padding-bottom: 3.5rem;
+  }
+
+  &__bg-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(rgba($color-primary, 0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
+    pointer-events: none;
+  }
+
+  &__container {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 3.5rem;
+    align-items: center;
+
+    @include mobile {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      text-align: center;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 1rem;
+    background: $color-gold-subtle;
+    border: 1px solid rgba($color-gold, 0.35);
+    color: $color-gold-dark;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-radius: $radius-full;
+    width: fit-content;
+    margin-bottom: 1.5rem;
+
+    @include mobile {
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 0.8rem;
+    }
+
+    &-icon {
+      color: $color-gold;
+    }
+  }
+
+  &__title {
+    font-size: 3.25rem;
+    line-height: 1.15;
+    color: $color-primary-dark;
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.03em;
+
+    @include mobile {
+      font-size: 2.25rem;
+    }
+
+    &-highlight {
+      background: linear-gradient(135deg, $color-gold-dark 0%, $color-gold 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+  }
+
+  &__subtitle {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: $color-text-secondary;
+    margin-bottom: 1.5rem;
+
+    @include mobile {
+      font-size: 1.05rem;
+    }
+
+    &-location {
+      color: $color-primary;
+    }
+  }
+
+  &__features-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+
+    @include mobile {
+      justify-content: center;
+    }
+  }
+
+  &__pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: $color-primary;
+    background: #FFFFFF;
+    border: 1px solid $color-border;
+    padding: 0.35rem 0.85rem;
+    border-radius: $radius-full;
+    box-shadow: $shadow-sm;
+
+    svg {
+      color: $color-gold;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2.25rem;
+
+    @include mobile {
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+  }
+
+  &__trust-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid $color-border;
+
+    @include mobile {
+      justify-content: center;
+      gap: 1rem;
+    }
+  }
+
+  &__trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: $color-text-muted;
+    font-weight: 500;
+  }
+
+  &__trust-icon {
+    color: $color-gold;
+  }
+
+  /* Dad's Visual Frame */
+  &__visual {
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+
+  &__image-wrapper {
+    position: relative;
+    max-width: 420px;
+    width: 100%;
+
+    @include mobile {
+      max-width: 320px;
+    }
+  }
+
+  &__image-glow {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: linear-gradient(135deg, rgba($color-gold, 0.4) 0%, rgba($color-primary, 0.3) 100%);
+    border-radius: $radius-xl;
+    filter: blur(16px);
+    opacity: 0.6;
+    z-index: 1;
+  }
+
+  &__image-card {
+    position: relative;
+    z-index: 2;
+    background: #FFFFFF;
+    padding: 0.75rem;
+    border-radius: $radius-xl;
+    border: 2px solid rgba($color-gold, 0.4);
+    box-shadow: $shadow-xl;
+    overflow: hidden;
+  }
+
+  &__image {
+    width: 100%;
+    height: 440px;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: calc($radius-xl - 6px);
+    transition: transform $transition-smooth;
+
+    @include mobile {
+      height: 360px;
+    }
+
+    &:hover {
+      transform: scale(1.02);
+    }
+  }
+
+  &__image-badge {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    right: 1.5rem;
+    background: rgba(15, 36, 62, 0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba($color-gold, 0.5);
+    padding: 0.85rem 1.25rem;
+    border-radius: $radius-lg;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    box-shadow: $shadow-lg;
+  }
+
+  &__image-badge-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: $color-whatsapp;
+    box-shadow: 0 0 8px $color-whatsapp;
+    flex-shrink: 0;
+  }
+
+  &__image-badge-text {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+
+    strong {
+      color: #FFFFFF;
+      font-size: 1.05rem;
+      font-family: $font-heading;
+    }
+
+    span {
+      color: $color-gold-light;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+  }
+}

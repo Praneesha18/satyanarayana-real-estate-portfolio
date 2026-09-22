@@ -1,0 +1,171 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.about-owner {
+  background: $color-bg-light;
+
+  &__card {
+    background: #FFFFFF;
+    border-radius: $radius-xl;
+    border: 1px solid $color-border;
+    box-shadow: $shadow-xl;
+    padding: 3rem;
+    overflow: hidden;
+
+    @include mobile {
+      padding: 1.5rem;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 3.5rem;
+    align-items: center;
+
+    @include tablet {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    @include mobile {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+
+  &__visual {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__image-container {
+    position: relative;
+    width: 100%;
+    max-width: 360px;
+    border-radius: $radius-xl;
+    overflow: hidden;
+    box-shadow: $shadow-lg;
+    border: 3px solid rgba($color-gold, 0.4);
+  }
+
+  &__image {
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+    object-position: center top;
+
+    @include mobile {
+      height: 320px;
+    }
+  }
+
+  &__image-tag {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(0deg, rgba(15, 36, 62, 0.95) 0%, rgba(15, 36, 62, 0) 100%);
+    padding: 1.5rem 1rem 1rem 1rem;
+    text-align: center;
+  }
+
+  &__image-tag-label {
+    color: $color-gold-light;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.35rem 0.85rem;
+      background: $color-gold-subtle;
+      border: 1px solid rgba($color-gold, 0.3);
+      color: $color-gold-dark;
+      font-size: 0.8rem;
+      font-weight: 700;
+      border-radius: $radius-full;
+      width: fit-content;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+  }
+
+  &__title {
+    font-size: 2.35rem;
+    color: $color-primary-dark;
+    margin-bottom: 0.35rem;
+
+    @include mobile {
+      font-size: 1.85rem;
+    }
+  }
+
+  &__role-heading {
+    font-size: 1.1rem;
+    color: $color-gold-dark;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+
+  &__bio {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: $color-text-secondary;
+    font-style: italic;
+    background: $color-bg-light;
+    padding: 1.25rem 1.5rem;
+    border-left: 4px solid $color-gold;
+    border-radius: 0 $radius-md $radius-md 0;
+    margin-bottom: 1.75rem;
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  &__detail-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+
+    strong {
+      display: block;
+      color: $color-primary-dark;
+      font-size: 0.9rem;
+      margin-bottom: 0.15rem;
+    }
+
+    span {
+      color: $color-text-secondary;
+      font-size: 0.95rem;
+    }
+  }
+
+  &__detail-icon {
+    color: $color-gold;
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    @include mobile {
+      flex-direction: column;
+    }
+  }
+}

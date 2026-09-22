@@ -1,0 +1,192 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.contact-section {
+  background: #FFFFFF;
+}
+
+.contact-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-bottom: 3.5rem;
+
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+}
+
+.contact-card {
+  position: relative;
+  background: $color-bg-light;
+  border-radius: $radius-xl;
+  border: 1px solid $color-border;
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  transition: all $transition-smooth;
+
+  @include mobile {
+    padding: 1.75rem 1.5rem;
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-lg;
+    border-color: rgba($color-gold, 0.4);
+  }
+
+  &--featured {
+    background: #FFFFFF;
+    border: 2px solid rgba($color-whatsapp, 0.5);
+    box-shadow: $shadow-lg;
+
+    &:hover {
+      border-color: $color-whatsapp;
+    }
+  }
+
+  &__badge {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.5rem;
+    background: rgba($color-whatsapp, 0.12);
+    color: $color-whatsapp-dark;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.25rem 0.65rem;
+    border-radius: $radius-full;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &__icon {
+    width: 54px;
+    height: 54px;
+    border-radius: $radius-lg;
+    @include flex-center;
+    margin-bottom: 1.5rem;
+
+    &--phone {
+      background: $color-primary-subtle;
+      color: $color-primary;
+    }
+
+    &--whatsapp {
+      background: rgba($color-whatsapp, 0.15);
+      color: $color-whatsapp-dark;
+    }
+
+    &--location {
+      background: $color-gold-subtle;
+      color: $color-gold-dark;
+    }
+  }
+
+  &__title {
+    font-size: 1.35rem;
+    color: $color-primary-dark;
+    margin-bottom: 0.75rem;
+  }
+
+  &__text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: $color-text-secondary;
+    margin-bottom: 1.25rem;
+    flex-grow: 1;
+  }
+
+  &__highlight-link {
+    font-family: $font-heading;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: $color-primary;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: $color-gold-dark;
+    }
+
+    &--whatsapp {
+      color: $color-whatsapp-dark;
+
+      &:hover {
+        color: $color-whatsapp;
+      }
+    }
+  }
+
+  &__hours {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: $color-text-muted;
+    margin-bottom: 1.5rem;
+  }
+
+  &__btn {
+    margin-top: auto;
+  }
+}
+
+.service-areas-box {
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-dark 100%);
+  border-radius: $radius-xl;
+  padding: 2rem 2.5rem;
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  box-shadow: $shadow-xl;
+
+  @include mobile {
+    padding: 1.5rem 1.25rem;
+  }
+
+  h4 {
+    color: $color-gold-light;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+}
+
+.service-areas-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.service-area-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 0.45rem 0.95rem;
+  border-radius: $radius-full;
+  font-size: 0.9rem;
+  font-weight: 500;
+  backdrop-filter: blur(4px);
+  color: #FFFFFF;
+  transition: all $transition-fast;
+
+  svg {
+    color: $color-gold;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.22);
+    border-color: $color-gold;
+  }
+}

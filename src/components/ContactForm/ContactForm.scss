@@ -1,0 +1,269 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.contact-form-section {
+  background: linear-gradient(180deg, #FFFFFF 0%, $color-bg-light 100%);
+  border-top: 1px solid $color-border;
+}
+
+.contact-form-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 3.5rem;
+  align-items: flex-start;
+
+  @include tablet {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.contact-form-intro {
+  display: flex;
+  flex-direction: column;
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.85rem;
+    background: $color-gold-subtle;
+    border: 1px solid rgba($color-gold, 0.3);
+    color: $color-gold-dark;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border-radius: $radius-full;
+    width: fit-content;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  h2 {
+    font-size: 2.35rem;
+    color: $color-primary-dark;
+    margin-bottom: 1rem;
+
+    @include mobile {
+      font-size: 1.85rem;
+    }
+  }
+
+  p {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: $color-text-secondary;
+    margin-bottom: 2rem;
+  }
+
+  &__perks {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: #FFFFFF;
+    padding: 1.75rem;
+    border-radius: $radius-lg;
+    border: 1px solid $color-border;
+    box-shadow: $shadow-sm;
+  }
+
+  &__perk {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    color: $color-primary-dark;
+    font-size: 0.95rem;
+    font-weight: 500;
+
+    svg {
+      color: $color-gold;
+      flex-shrink: 0;
+    }
+  }
+}
+
+.contact-form-card {
+  background: #FFFFFF;
+  border-radius: $radius-xl;
+  border: 1px solid $color-border;
+  padding: 2.5rem;
+  box-shadow: $shadow-xl;
+
+  @include mobile {
+    padding: 1.5rem;
+  }
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  &__label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: $color-primary-dark;
+  }
+
+  &__required {
+    color: $color-error;
+  }
+
+  &__optional {
+    color: $color-text-muted;
+    font-weight: normal;
+    font-size: 0.8rem;
+  }
+
+  &__input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  &__field-icon {
+    position: absolute;
+    left: 1rem;
+    color: $color-text-muted;
+    pointer-events: none;
+  }
+
+  &__input,
+  &__select {
+    width: 100%;
+    padding: 0.85rem 1rem 0.85rem 2.75rem;
+    border: 1.5px solid $color-border;
+    border-radius: $radius-md;
+    font-size: 0.95rem;
+    color: $color-text-primary;
+    background: #FFFFFF;
+    transition: all $transition-fast;
+
+    &:focus {
+      outline: none;
+      border-color: $color-gold;
+      box-shadow: 0 0 0 3px rgba($color-gold, 0.15);
+    }
+
+    &--error {
+      border-color: $color-error;
+      background-color: $color-error-bg;
+
+      &:focus {
+        border-color: $color-error;
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+      }
+    }
+
+    &:disabled {
+      background-color: $color-bg-light;
+      cursor: not-allowed;
+    }
+  }
+
+  &__select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.1em;
+    padding-right: 2.5rem;
+    cursor: pointer;
+  }
+
+  &__error-text {
+    font-size: 0.8rem;
+    color: $color-error;
+    font-weight: 500;
+  }
+
+  &__submit-btn {
+    margin-top: 0.75rem;
+    gap: 0.6rem;
+  }
+
+  &__privacy-note {
+    font-size: 0.78rem;
+    color: $color-text-muted;
+    text-align: center;
+    margin-top: 0.25rem;
+  }
+
+  &__alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem;
+    border-radius: $radius-md;
+    margin-bottom: 1.5rem;
+
+    h4 {
+      font-size: 1.05rem;
+      margin-bottom: 0.25rem;
+    }
+
+    p {
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    &--success {
+      background: $color-success-bg;
+      border: 1px solid rgba($color-success, 0.3);
+      color: #065F46;
+
+      h4 {
+        color: #065F46;
+      }
+
+      p {
+        color: #047857;
+      }
+
+      .contact-form__alert-icon {
+        color: $color-success;
+      }
+    }
+
+    &--error {
+      background: $color-error-bg;
+      border: 1px solid rgba($color-error, 0.3);
+      color: #991B1B;
+
+      h4 {
+        color: #991B1B;
+      }
+
+      p {
+        color: #B91C1C;
+      }
+
+      .contact-form__alert-icon {
+        color: $color-error;
+      }
+    }
+  }
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
