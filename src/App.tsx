@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { LanguageProvider } from './context/LanguageContext';
+import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
 import { Navbar } from './components/Navbar/Navbar';
 import { Hero } from './components/Hero/Hero';
 import { PropertyTypes } from './sections/PropertyTypes/PropertyTypes';
@@ -71,9 +72,11 @@ function MainLayout() {
 
 export function App() {
   return (
-    <LanguageProvider>
-      <MainLayout />
-    </LanguageProvider>
+    <ErrorBoundary>
+      <LanguageProvider>
+        <MainLayout />
+      </LanguageProvider>
+    </ErrorBoundary>
   );
 }
 
