@@ -9,24 +9,28 @@ export interface BusinessConfig {
   businessName: string;
   tagline: string;
   ownerName: string;
+  fullName: string;
   role: string;
   phone: string;
   rawPhone: string;
   whatsappNumber: string;
   email: string;
   address: {
-    line1: string;
-    line2: string;
+    landmark: string;
+    area: string;
     city: string;
     state: string;
-    pincode: string;
+    country: string;
     full: string;
   };
   serviceAreas: string[];
   googleMapsUrl: string;
+  spreadsheetUrl: string;
+  spreadsheetId: string;
   photoUrl: string;
   whatsappMessages: {
     general: string;
+    generalTe: string;
     openPlots: string;
     residentialPlots: string;
     independentHouses: string;
@@ -38,36 +42,40 @@ export interface BusinessConfig {
 }
 
 export const BUSINESS_CONFIG: BusinessConfig = {
-  businessName: "Satyanarayana Real Estate",
-  tagline: "Your Trusted Partner for Genuine Plots & Homes",
-  ownerName: "Satyanarayana",
+  businessName: "Bheemarasetty Satyanarayana Real Estate",
+  tagline: "Your Trusted Partner for Genuine Plots & Homes in Visakhapatnam",
+  ownerName: "Bheemarasetty Satyanarayana",
+  fullName: "Bheemarasetty Satyanarayana",
   role: "Real Estate Consultant & Property Advisor",
-  phone: "+91 98765 43210",
-  rawPhone: "+919876543210",
-  whatsappNumber: "919876543210",
+  phone: "+91 88975 82265",
+  rawPhone: "+918897582265",
+  whatsappNumber: "918897582265",
   email: "contact@satyanarayanarealestate.com",
   address: {
-    line1: "D.No. 12-34/5, Main Commercial Road",
-    line2: "Near RTC Complex",
+    landmark: "Near Santhoshimatha Temple",
+    area: "Thatichetlapalem",
     city: "Visakhapatnam",
     state: "Andhra Pradesh",
-    pincode: "530016",
-    full: "Main Commercial Road, Near RTC Complex, Visakhapatnam, Andhra Pradesh 530016",
+    country: "India",
+    full: "Near Santhoshimatha Temple, Thatichetlapalem, Visakhapatnam, Andhra Pradesh, India",
   },
   serviceAreas: [
     "Madhurawada",
     "Bhogapuram Highway",
     "Anandapuram",
     "Tagarapuvalasa",
-    "Pendurthi",
-    "Gajuwaka & Surrounding Areas",
+    "Thatichetlapalem",
+    "Pendurthi & Visakhapatnam Regions",
   ],
-  googleMapsUrl: "https://maps.google.com/?q=Visakhapatnam+Andhra+Pradesh",
+  googleMapsUrl: "https://maps.google.com/?q=Near+Santhoshimatha+Temple+Thatichetlapalem+Visakhapatnam+Andhra+Pradesh",
+  spreadsheetUrl: "https://docs.google.com/spreadsheets/d/1m9DHbTnzCNYMx6Rby6v3e9WdKXi8KAeC_UEroQtMTH4/edit?usp=drivesdk",
+  spreadsheetId: "1m9DHbTnzCNYMx6Rby6v3e9WdKXi8KAeC_UEroQtMTH4",
   photoUrl: "/images/dad-photo.jpeg",
   whatsappMessages: {
-    general: "Hello Satyanarayana garu, I found your website and I am interested in exploring available properties. Please share more details.",
+    general: "Hello Satyanarayana garu, I am interested in exploring available properties in Visakhapatnam. Please share more details.",
+    generalTe: "నమస్తే సత్యనారాయణ గారు, మీ వద్ద ఉన్న ప్రాపర్టీల వివరాలు తెలుసుకోవాలనుకుంటున్నాను. దయచేసి వివరాలు పంపగలరు.",
     openPlots: "Hello Satyanarayana garu, I am interested in Open Plots for investment. Please share available options and site locations.",
-    residentialPlots: "Hello Satyanarayana garu, I am looking for Residential Plots to build a house. Please share available plot details.",
+    residentialPlots: "Hello Satyanarayana garu, I am looking for Residential Plots to build a house in Visakhapatnam. Please share available plot details.",
     independentHouses: "Hello Satyanarayana garu, I am interested in Independent Houses. Please share available houses and pricing details.",
   },
   stats: [

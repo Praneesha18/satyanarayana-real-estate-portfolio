@@ -1,5 +1,6 @@
 import React from 'react';
 import { BUSINESS_CONFIG, getWhatsAppUrl } from '../../config/business';
+import { useLanguage } from '../../context/LanguageContext';
 import { MessageCircle, ArrowDownCircle, ShieldCheck, MapPin, CheckCircle2 } from 'lucide-react';
 import './Hero.scss';
 
@@ -8,10 +9,17 @@ interface HeroProps {
 }
 
 export const Hero: React.FC<HeroProps> = ({ onExploreProperties }) => {
+  const { language, t } = useLanguage();
+
   const handleScrollToProperties = (e: React.MouseEvent) => {
     e.preventDefault();
     onExploreProperties();
   };
+
+  const whatsappMessage =
+    language === 'te'
+      ? BUSINESS_CONFIG.whatsappMessages.generalTe
+      : BUSINESS_CONFIG.whatsappMessages.general;
 
   return (
     <section id="hero" className="hero">
@@ -21,58 +29,55 @@ export const Hero: React.FC<HeroProps> = ({ onExploreProperties }) => {
         <div className="hero__content">
           <div className="hero__badge">
             <ShieldCheck size={16} className="hero__badge-icon" />
-            <span>Direct & Trusted Local Property Consultant</span>
+            <span>{t.hero.badge}</span>
           </div>
 
           <h1 className="hero__title">
-            Find the Right Property for <span className="hero__title-highlight">Your Future</span>
+            {t.hero.titleStart}
+            <span className="hero__title-highlight">{t.hero.titleHighlight}</span>
           </h1>
 
           <p className="hero__subtitle">
-            Open plots, residential plots, and independent houses available across{' '}
-            <strong className="hero__subtitle-location">
-              {BUSINESS_CONFIG.serviceAreas.slice(0, 3).join(', ')} & surrounding areas
-            </strong>
-            . Direct assistance, transparent dealings, and personalized site visits.
+            {t.hero.subtitle}
           </p>
 
           <div className="hero__features-pills">
             <span className="hero__pill">
-              <CheckCircle2 size={15} /> Open Plots
+              <CheckCircle2 size={15} /> {t.hero.pillOpenPlots}
             </span>
             <span className="hero__pill">
-              <CheckCircle2 size={15} /> Residential Plots
+              <CheckCircle2 size={15} /> {t.hero.pillResidentialPlots}
             </span>
             <span className="hero__pill">
-              <CheckCircle2 size={15} /> Independent Houses
+              <CheckCircle2 size={15} /> {t.hero.pillIndependentHouses}
             </span>
           </div>
 
           <div className="hero__actions">
             <button onClick={handleScrollToProperties} className="btn btn-primary btn-lg hero__btn-primary">
-              <span>View Properties</span>
+              <span>{t.hero.btnViewProperties}</span>
               <ArrowDownCircle size={20} />
             </button>
 
             <a
-              href={getWhatsAppUrl(BUSINESS_CONFIG.whatsappMessages.general)}
+              href={getWhatsAppUrl(whatsappMessage)}
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-whatsapp btn-lg hero__btn-whatsapp"
             >
               <MessageCircle size={20} />
-              <span>WhatsApp Us</span>
+              <span>{t.hero.btnWhatsApp}</span>
             </a>
           </div>
 
           <div className="hero__trust-strip">
             <div className="hero__trust-item">
               <MapPin size={16} className="hero__trust-icon" />
-              <span>Direct Property Guidance in {BUSINESS_CONFIG.address.city}</span>
+              <span>{t.hero.trustGuidance}</span>
             </div>
             <div className="hero__trust-item">
               <ShieldCheck size={16} className="hero__trust-icon" />
-              <span>No Mediators • Direct Communication</span>
+              <span>{t.hero.trustNoMediator}</span>
             </div>
           </div>
         </div>
@@ -84,12 +89,11 @@ export const Hero: React.FC<HeroProps> = ({ onExploreProperties }) => {
             <div className="hero__image-card">
               <img
                 src={BUSINESS_CONFIG.photoUrl}
-                alt={`Photo of ${BUSINESS_CONFIG.ownerName} - ${BUSINESS_CONFIG.role}`}
+                alt={`Photo of ${BUSINESS_CONFIG.ownerName}`}
                 className="hero__image"
                 loading="eager"
                 fetchPriority="high"
                 onError={(e) => {
-                  // Fallback if image path has issue
                   (e.currentTarget as HTMLImageElement).src = '/images/dad-photo.jpeg';
                 }}
               />
@@ -97,7 +101,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreProperties }) => {
                 <div className="hero__image-badge-dot" />
                 <div className="hero__image-badge-text">
                   <strong>{BUSINESS_CONFIG.ownerName}</strong>
-                  <span>{BUSINESS_CONFIG.role}</span>
+                  <span>{t.hero.consultantTag}</span>
                 </div>
               </div>
             </div>

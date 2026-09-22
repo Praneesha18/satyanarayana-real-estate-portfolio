@@ -1,29 +1,37 @@
 import React from 'react';
 import { BUSINESS_CONFIG, getPhoneCallUrl, getWhatsAppUrl } from '../../config/business';
+import { useLanguage } from '../../context/LanguageContext';
 import { Phone, MessageCircle } from 'lucide-react';
 import './MobileBottomBar.scss';
 
 export const MobileBottomBar: React.FC = () => {
+  const { language, t } = useLanguage();
+
+  const whatsappMessage =
+    language === 'te'
+      ? BUSINESS_CONFIG.whatsappMessages.generalTe
+      : BUSINESS_CONFIG.whatsappMessages.general;
+
   return (
     <div className="mobile-bottom-bar" aria-label="Quick Mobile Actions">
       <a
         href={getPhoneCallUrl()}
         className="mobile-bottom-bar__btn mobile-bottom-bar__btn--call"
-        title="Direct Call"
+        title={`Call ${BUSINESS_CONFIG.ownerName}`}
       >
         <Phone size={18} />
-        <span>Call Now</span>
+        <span>{t.mobileBar.call}</span>
       </a>
 
       <a
-        href={getWhatsAppUrl(BUSINESS_CONFIG.whatsappMessages.general)}
+        href={getWhatsAppUrl(whatsappMessage)}
         target="_blank"
         rel="noopener noreferrer"
         className="mobile-bottom-bar__btn mobile-bottom-bar__btn--whatsapp"
         title="WhatsApp Chat"
       >
         <MessageCircle size={18} />
-        <span>WhatsApp</span>
+        <span>{t.mobileBar.whatsapp}</span>
       </a>
     </div>
   );

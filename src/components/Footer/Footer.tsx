@@ -1,9 +1,17 @@
 import React from 'react';
 import { BUSINESS_CONFIG, getPhoneCallUrl, getWhatsAppUrl } from '../../config/business';
+import { useLanguage } from '../../context/LanguageContext';
 import { Building2, Phone, MessageCircle, MapPin, Mail, ArrowUp } from 'lucide-react';
 import './Footer.scss';
 
 export const Footer: React.FC = () => {
+  const { language, t } = useLanguage();
+
+  const whatsappMessage =
+    language === 'te'
+      ? BUSINESS_CONFIG.whatsappMessages.generalTe
+      : BUSINESS_CONFIG.whatsappMessages.general;
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -23,67 +31,66 @@ export const Footer: React.FC = () => {
               </div>
               <div>
                 <span className="footer__brand-title">{BUSINESS_CONFIG.businessName}</span>
-                <span className="footer__brand-tagline">Real Estate & Property Consultant</span>
+                <span className="footer__brand-tagline">{t.navbar.brandSubtitle}</span>
               </div>
             </div>
 
             <p className="footer__desc">
-              Dedicated property guidance for open plots, residential layouts, and independent homes.
-              We prioritize direct communication, clear information, and hassle-free site visits.
+              {t.footer.description}
             </p>
 
             <div className="footer__consultant-badge">
-              <span>Direct Consultant: <strong>{BUSINESS_CONFIG.ownerName}</strong></span>
+              <span>{t.footer.consultantPrefix} <strong>{BUSINESS_CONFIG.ownerName}</strong></span>
             </div>
           </div>
 
           {/* Property Categories Col */}
           <div className="footer__col">
-            <h4 className="footer__heading">Property Types</h4>
+            <h4 className="footer__heading">{t.footer.headingProperties}</h4>
             <ul className="footer__links">
               <li>
-                <a href="#properties">Open Plots (Investment)</a>
+                <a href="#properties">{t.hero.pillOpenPlots}</a>
               </li>
               <li>
-                <a href="#properties">Residential Plots (Housing)</a>
+                <a href="#properties">{t.hero.pillResidentialPlots}</a>
               </li>
               <li>
-                <a href="#properties">Independent Houses</a>
+                <a href="#properties">{t.hero.pillIndependentHouses}</a>
               </li>
               <li>
-                <a href="#enquire">Custom Property Request</a>
+                <a href="#enquire">{t.navbar.enquireNow}</a>
               </li>
             </ul>
           </div>
 
           {/* Quick Links Col */}
           <div className="footer__col">
-            <h4 className="footer__heading">Quick Navigation</h4>
+            <h4 className="footer__heading">{t.footer.headingQuickLinks}</h4>
             <ul className="footer__links">
               <li>
-                <a href="#hero">Home</a>
+                <a href="#hero">{t.footer.navHome}</a>
               </li>
               <li>
-                <a href="#properties">Property Categories</a>
+                <a href="#properties">{t.footer.navProperties}</a>
               </li>
               <li>
-                <a href="#why-us">Why Choose Us</a>
+                <a href="#why-us">{t.footer.navWhyUs}</a>
               </li>
               <li>
-                <a href="#about">About {BUSINESS_CONFIG.ownerName}</a>
+                <a href="#about">{t.footer.navAbout}</a>
               </li>
               <li>
-                <a href="#enquire">Enquiry Form</a>
+                <a href="#enquire">{t.footer.navEnquire}</a>
               </li>
               <li>
-                <a href="#contact">Contact & Map</a>
+                <a href="#contact">{t.footer.navContact}</a>
               </li>
             </ul>
           </div>
 
           {/* Contact Col */}
           <div className="footer__col">
-            <h4 className="footer__heading">Get In Touch</h4>
+            <h4 className="footer__heading">{t.footer.headingContact}</h4>
             <ul className="footer__contact-list">
               <li>
                 <Phone size={16} className="footer__contact-icon" />
@@ -92,7 +99,7 @@ export const Footer: React.FC = () => {
               <li>
                 <MessageCircle size={16} className="footer__contact-icon" />
                 <a
-                  href={getWhatsAppUrl(BUSINESS_CONFIG.whatsappMessages.general)}
+                  href={getWhatsAppUrl(whatsappMessage)}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -105,7 +112,7 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <MapPin size={16} className="footer__contact-icon" />
-                <span>{BUSINESS_CONFIG.address.city}, {BUSINESS_CONFIG.address.state}</span>
+                <span>{BUSINESS_CONFIG.address.area}, {BUSINESS_CONFIG.address.city}</span>
               </li>
             </ul>
           </div>
@@ -113,7 +120,7 @@ export const Footer: React.FC = () => {
 
         <div className="footer__bottom">
           <p className="footer__copyright">
-            © {new Date().getFullYear()} {BUSINESS_CONFIG.businessName}. All rights reserved.
+            © {new Date().getFullYear()} {BUSINESS_CONFIG.businessName}. {t.footer.copyright}
           </p>
 
           <button
@@ -122,7 +129,7 @@ export const Footer: React.FC = () => {
             aria-label="Back to top of page"
             title="Back to top"
           >
-            <span>Back to top</span>
+            <span>{t.footer.backToTop}</span>
             <ArrowUp size={16} />
           </button>
         </div>

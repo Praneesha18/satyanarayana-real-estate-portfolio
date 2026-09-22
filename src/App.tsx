@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { LanguageProvider } from './context/LanguageContext';
 import { Navbar } from './components/Navbar/Navbar';
 import { Hero } from './components/Hero/Hero';
 import { PropertyTypes } from './sections/PropertyTypes/PropertyTypes';
@@ -11,7 +12,7 @@ import { WhatsAppButton } from './components/WhatsAppButton/WhatsAppButton';
 import { MobileBottomBar } from './components/MobileBottomBar/MobileBottomBar';
 import { PropertyCategory } from './types/enquiry';
 
-export function App() {
+function MainLayout() {
   const [selectedCategory, setSelectedCategory] = useState<PropertyCategory>('Open Plot');
 
   const scrollToSection = (sectionId: string) => {
@@ -43,7 +44,7 @@ export function App() {
 
   return (
     <div className="app-layout">
-      {/* Top Fixed Navbar */}
+      {/* Top Fixed Navbar without cramped links */}
       <Navbar onNavigateToForm={handleNavigateToForm} />
 
       {/* Main Page Content */}
@@ -59,12 +60,20 @@ export function App() {
       {/* Footer */}
       <Footer />
 
-      {/* Interactive Communication Floating Widget */}
+      {/* Floating WhatsApp Action Widget */}
       <WhatsAppButton />
 
       {/* Mobile Sticky Bottom Action Bar */}
       <MobileBottomBar />
     </div>
+  );
+}
+
+export function App() {
+  return (
+    <LanguageProvider>
+      <MainLayout />
+    </LanguageProvider>
   );
 }
 

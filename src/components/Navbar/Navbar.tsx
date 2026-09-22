@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { BUSINESS_CONFIG, getPhoneCallUrl } from '../../config/business';
-import { Phone, Menu, X, Building2 } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
+import { Phone, Building2, Globe } from 'lucide-react';
 import './Navbar.scss';
 
 interface NavbarProps {
-  onNavigateToForm?: (propertyType?: string) => void;
+  onNavigateToForm?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ onNavigateToForm }) => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { language, setLanguage, t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,24 +20,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateToForm }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
-    e.preventDefault();
-    setIsMobileMenuOpen(false);
-    const element = document.getElementById(targetId);
-    if (element) {
-      const headerOffset = 70;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    }
-  };
-
   const handleEnquireClick = () => {
-    setIsMobileMenuOpen(false);
     if (onNavigateToForm) {
       onNavigateToForm();
     } else {
@@ -47,94 +31,66 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateToForm }) => {
     }
   };
 
+  const scrollToTop = (e: React.MouseEvent) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <header className={`navbar ${isScrolled ? 'navbar--scrolled' : ''}`}>
       <div className="container navbar__container">
-        {/* Brand Logo */}
-        <a href="#hero" className="navbar__brand" onClick={(e) => handleNavClick(e, 'hero')}>
+        {/* Brand Logo & Name */}
+        <a href="#hero" className="navbar__brand" onClick={scrollToTop}>
           <div className="navbar__logo-icon">
-            <Building2 size={22} />
+            <Building2 size={24} />
           </div>
           <div className="navbar__brand-text">
-            <span className="navbar__brand-title">{BUSINESS_CONFIG.businessName}</span>
-            <span className="navbar__brand-subtitle">Property Consultant</span>
+            <span className="navbar__brand-title">{t.navbar.brandTitle}</span>
+            <span className="navbar__brand-subtitle">{t.navbar.brandSubtitle}</span>
           </div>
         </a>
 
-        {/* Desktop Navigation Links */}
-        <nav className="navbar__nav" aria-label="Main Navigation">
-          <ul className="navbar__links">
-            <li>
-              <a href="#hero" onClick={(e) => handleNavClick(e, 'hero')}>Home</a>
-            </li>
-            <li>
-              <a href="#properties" onClick={(e) => handleNavClick(e, 'properties')}>Properties</a>
-            </li>
-            <li>
-              <a href="#why-us" onClick={(e) => handleNavClick(e, 'why-us')}>Why Choose Us</a>
-            </li>
-            <li>
-              <a href="#about" onClick={(e) => handleNavClick(e, 'about')}>About {BUSINESS_CONFIG.ownerName}</a>
-            </li>
-            <li>
-              <a href="#contact" onClick={(e) => handleNavClick(e, 'contact')}>Contact</a>
-            </li>
-          </ul>
-        </nav>
-
-        {/* Desktop Actions */}
+        {/* Right Actions: Language Switcher, Direct Call & Enquire CTA */}
         <div className="navbar__actions">
-          <a href={getPhoneCallUrl()} className="navbar__call-btn" title="Call directly">
+          {/* Language Switcher */}
+          <div className="navbar__lang-switch" role="group" aria-label="Language Selector">
+            <Globe size={15} className="navbar__lang-icon" />
+            <button
+              type="button"
+              className={`navbar__lang-btn ${language === 'en' ? 'navbar__lang-btn--active' : ''}`}
+              onClick={() => setLanguage('en')}
+            >
+              English
+            </button>
+            <span className="navbar__lang-divider">|</span>
+            <button
+              type="button"
+              className={`navbar__lang-btn ${language === 'te' ? 'navbar__lang-btn--active' : ''}`}
+              onClick={() => setLanguage('te')}
+            >
+              తెలుగు
+            </button>
+          </div>
+
+          {/* Direct Phone Call Button */}
+          <a
+            href={getPhoneCallUrl()}
+            className="navbar__call-btn"
+            title={`Call ${BUSINESS_CONFIG.ownerName} directly`}
+          >
             <Phone size={16} />
             <span>{BUSINESS_CONFIG.phone}</span>
           </a>
-          <button onClick={handleEnquireClick} className="btn btn-primary navbar__cta-btn">
-            Enquire Now
+
+          {/* Enquire CTA Button */}
+          <button
+            type="button"
+            onClick={handleEnquireClick}
+            className="btn btn-primary navbar__cta-btn"
+          >
+            {t.navbar.enquireNow}
           </button>
         </div>
-
-        {/* Mobile Hamburger Toggle */}
-        <button
-          className="navbar__mobile-toggle"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-          aria-expanded={isMobileMenuOpen}
-        >
-          {isMobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
-        </button>
-      </div>
-
-      {/* Mobile Drawer Menu */}
-      <div className={`navbar__mobile-drawer ${isMobileMenuOpen ? 'navbar__mobile-drawer--open' : ''}`}>
-        <nav aria-label="Mobile Navigation">
-          <ul className="navbar__mobile-links">
-            <li>
-              <a href="#hero" onClick={(e) => handleNavClick(e, 'hero')}>Home</a>
-            </li>
-            <li>
-              <a href="#properties" onClick={(e) => handleNavClick(e, 'properties')}>Property Categories</a>
-            </li>
-            <li>
-              <a href="#why-us" onClick={(e) => handleNavClick(e, 'why-us')}>Why Choose Us</a>
-            </li>
-            <li>
-              <a href="#about" onClick={(e) => handleNavClick(e, 'about')}>About {BUSINESS_CONFIG.ownerName}</a>
-            </li>
-            <li>
-              <a href="#contact" onClick={(e) => handleNavClick(e, 'contact')}>Contact & Location</a>
-            </li>
-          </ul>
-
-          <div className="navbar__mobile-actions">
-            <button onClick={handleEnquireClick} className="btn btn-primary btn-full">
-              Enquire Now
-            </button>
-            <a href={getPhoneCallUrl()} className="btn btn-secondary btn-full">
-              <Phone size={18} />
-              Call {BUSINESS_CONFIG.phone}
-            </a>
-          </div>
-        </nav>
       </div>
     </header>
   );

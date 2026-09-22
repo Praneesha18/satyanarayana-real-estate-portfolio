@@ -1,6 +1,7 @@
 import React from 'react';
 import { PropertyCategory } from '../../types/enquiry';
 import { getWhatsAppUrl } from '../../config/business';
+import { useLanguage } from '../../context/LanguageContext';
 import { ArrowRight, MessageCircle, Check } from 'lucide-react';
 import './PropertyCard.scss';
 
@@ -27,6 +28,8 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
   customWhatsAppMessage,
   onSelectCategory,
 }) => {
+  const { t } = useLanguage();
+
   return (
     <div className="property-card">
       {badge && <span className="property-card__badge">{badge}</span>}
@@ -42,7 +45,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
       <p className="property-card__description">{description}</p>
 
       <div className="property-card__highlights">
-        <span className="property-card__highlights-label">Key Highlights:</span>
+        <span className="property-card__highlights-label">{t.propertyTypes.highlightsLabel}</span>
         <ul>
           {highlights.map((item, idx) => (
             <li key={idx}>
@@ -58,7 +61,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
           onClick={() => onSelectCategory(category)}
           className="btn btn-primary btn-full property-card__btn-enquire"
         >
-          <span>Enquire Now</span>
+          <span>{t.propertyTypes.btnEnquire}</span>
           <ArrowRight size={18} />
         </button>
 
@@ -70,7 +73,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
           title={`Chat about ${title} on WhatsApp`}
         >
           <MessageCircle size={18} />
-          <span>Ask on WhatsApp</span>
+          <span>{t.propertyTypes.btnWhatsApp}</span>
         </a>
       </div>
     </div>

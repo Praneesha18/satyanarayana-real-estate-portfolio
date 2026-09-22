@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { EnquiryFormData, PropertyCategory, PreferredCallTime } from '../../types/enquiry';
 import { submitLeadEnquiry } from '../../services/leadService';
-import { BUSINESS_CONFIG } from '../../config/business';
+import { useLanguage } from '../../context/LanguageContext';
 import { Send, CheckCircle2, AlertCircle, Loader2, PhoneCall, Clock, User, MapPin, Building } from 'lucide-react';
 import './ContactForm.scss';
 
@@ -24,14 +24,8 @@ const CALL_TIME_OPTIONS: PreferredCallTime[] = [
   '6 PM – 9 PM',
 ];
 
-const PROPERTY_OPTIONS: PropertyCategory[] = [
-  'Open Plot',
-  'Residential Plot',
-  'Independent House',
-  'Not Sure',
-];
-
 export const ContactForm: React.FC<ContactFormProps> = ({ selectedCategory }) => {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState<EnquiryFormData>(INITIAL_FORM_STATE);
   const [errors, setErrors] = useState<Partial<Record<keyof EnquiryFormData, string>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -49,7 +43,6 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCategory }) =>
   }, [selectedCategory]);
 
   const validatePhone = (phone: string): boolean => {
-    // Strip spaces, dashes, parentheses and country code +91 or 91
     const cleaned = phone.replace(/\D/g, '');
     if (cleaned.length === 10 && /^[6-9]\d{9}$/.test(cleaned)) {
       return true;
@@ -64,19 +57,19 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCategory }) =>
     const newErrors: Partial<Record<keyof EnquiryFormData, string>> = {};
 
     if (!formData.name.trim()) {
-      newErrors.name = 'Please enter your full name';
+      newErrors.name = t.form.validationName;
     } else if (formData.name.trim().length < 2) {
-      newErrors.name = 'Name should be at least 2 characters';
+      newErrors.name = t.form.validationName;
     }
 
     if (!formData.phone.trim()) {
-      newErrors.phone = 'Please enter your 10-digit mobile number';
+      newErrors.phone = t.form.validationPhone;
     } else if (!validatePhone(formData.phone)) {
-      newErrors.phone = 'Please enter a valid 10-digit Indian phone number (e.g., 9876543210)';
+      newErrors.phone = t.form.validationPhone;
     }
 
     if (!formData.preferredCallTime) {
-      newErrors.preferredCallTime = 'Please select your preferred time to call';
+      newErrors.preferredCallTime = 'Please select a call time';
     }
 
     if (!formData.propertyType) {
@@ -130,30 +123,34 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCategory }) =>
     }
   };
 
+  const propertyOptions: { value: PropertyCategory; label: string }[] = [
+    { value: 'Open Plot', label: t.form.propertyOptions.openPlot },
+    { value: 'Residential Plot', label: t.form.propertyOptions.residentialPlot },
+    { value: 'Independent House', label: t.form.propertyOptions.house },
+    { value: 'Not Sure', label: t.form.propertyOptions.notSure },
+  ];
+
   return (
     <section id="enquire" className="section contact-form-section">
       <div className="container">
         <div className="contact-form-wrapper">
           <div className="contact-form-intro">
-            <span className="badge">Direct Property Enquiry</span>
-            <h2>Get in Touch with {BUSINESS_CONFIG.ownerName}</h2>
-            <p>
-              Fill out this quick form with your property requirement. {BUSINESS_CONFIG.ownerName} will
-              review your details and call you directly at your preferred time.
-            </p>
+            <span className="badge">{t.form.badge}</span>
+            <h2>{t.form.heading}</h2>
+            <p>{t.form.subheading}</p>
 
             <div className="contact-form-intro__perks">
               <div className="contact-form-intro__perk">
                 <PhoneCall size={18} />
-                <span>Direct 1-on-1 discussion with {BUSINESS_CONFIG.ownerName}</span>
+                <span>{t.form.perk1}</span>
               </div>
               <div className="contact-form-intro__perk">
                 <Clock size={18} />
-                <span>Call scheduled at your convenient time</span>
+                <span>{t.form.perk2}</span>
               </div>
               <div className="contact-form-intro__perk">
                 <Building size={18} />
-                <span>Honest location advice & site visit coordination</span>
+                <span>{t.form.perk3}</span>
               </div>
             </div>
           </div>
@@ -163,7 +160,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCategory }) =>
               <div className="contact-form__alert contact-form__alert--success" role="alert">
                 <CheckCircle2 size={24} className="contact-form__alert-icon" />
                 <div>
-                  <h4>Enquiry Received!</h4>
+                  <h4>{t.form.successTitle}</h4>
                   <p>{statusMessage}</p>
                 </div>
               </div>
@@ -173,7 +170,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCategory }) =>
               <div className="contact-form__alert contact-form__alert--error" role="alert">
                 <AlertCircle size={24} className="contact-form__alert-icon" />
                 <div>
-                  <h4>Submission Issue</h4>
+                  <h4>{t.form.errorTitle}</h4>
                   <p>{statusMessage}</p>
                 </div>
               </div>
@@ -183,7 +180,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCategory }) =>
               {/* Name */}
               <div className="contact-form__group">
                 <label htmlFor="name" className="contact-form__label">
-                  Your Full Name <span className="contact-form__required">*</span>
+                  {t.form.labelName} <span className="contact-form__required">{t.form.required}</span>
                 </label>
                 <div className="contact-form__input-wrapper">
                   <User size={18} className="contact-form__field-icon" />
@@ -193,7 +190,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCategory }) =>
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="e.g. Ramesh Kumar"
+                    placeholder={t.form.placeholderName}
                     className={`contact-form__input ${errors.name ? 'contact-form__input--error' : ''}`}
                     disabled={isSubmitting}
                     autoComplete="name"
@@ -206,7 +203,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCategory }) =>
               {/* Phone */}
               <div className="contact-form__group">
                 <label htmlFor="phone" className="contact-form__label">
-                  Mobile Number <span className="contact-form__required">*</span>
+                  {t.form.labelPhone} <span className="contact-form__required">{t.form.required}</span>
                 </label>
                 <div className="contact-form__input-wrapper">
                   <PhoneCall size={18} className="contact-form__field-icon" />
@@ -216,7 +213,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCategory }) =>
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    placeholder="10-digit mobile number (e.g. 9876543210)"
+                    placeholder={t.form.placeholderPhone}
                     className={`contact-form__input ${errors.phone ? 'contact-form__input--error' : ''}`}
                     disabled={isSubmitting}
                     autoComplete="tel"
@@ -229,7 +226,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCategory }) =>
               {/* Property Category */}
               <div className="contact-form__group">
                 <label htmlFor="propertyType" className="contact-form__label">
-                  Interested Property Type <span className="contact-form__required">*</span>
+                  {t.form.labelProperty} <span className="contact-form__required">{t.form.required}</span>
                 </label>
                 <div className="contact-form__input-wrapper">
                   <Building size={18} className="contact-form__field-icon" />
@@ -241,9 +238,9 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCategory }) =>
                     className={`contact-form__select ${errors.propertyType ? 'contact-form__input--error' : ''}`}
                     disabled={isSubmitting}
                   >
-                    {PROPERTY_OPTIONS.map((opt) => (
-                      <option key={opt} value={opt}>
-                        {opt}
+                    {propertyOptions.map((opt) => (
+                      <option key={opt.value} value={opt.value}>
+                        {opt.label}
                       </option>
                     ))}
                   </select>
@@ -256,7 +253,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCategory }) =>
               {/* Preferred Call Time */}
               <div className="contact-form__group">
                 <label htmlFor="preferredCallTime" className="contact-form__label">
-                  Preferred Time to Call <span className="contact-form__required">*</span>
+                  {t.form.labelCallTime} <span className="contact-form__required">{t.form.required}</span>
                 </label>
                 <div className="contact-form__input-wrapper">
                   <Clock size={18} className="contact-form__field-icon" />
@@ -280,7 +277,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCategory }) =>
               {/* Location / Address */}
               <div className="contact-form__group">
                 <label htmlFor="address" className="contact-form__label">
-                  Your Location / Preferred Area <span className="contact-form__optional">(Optional)</span>
+                  {t.form.labelAddress} <span className="contact-form__optional">{t.form.optional}</span>
                 </label>
                 <div className="contact-form__input-wrapper">
                   <MapPin size={18} className="contact-form__field-icon" />
@@ -290,7 +287,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCategory }) =>
                     name="address"
                     value={formData.address}
                     onChange={handleChange}
-                    placeholder="e.g. Madhurawada / Looking near Highway"
+                    placeholder={t.form.placeholderAddress}
                     className="contact-form__input"
                     disabled={isSubmitting}
                   />
@@ -306,18 +303,18 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCategory }) =>
                 {isSubmitting ? (
                   <>
                     <Loader2 size={20} className="spinner" />
-                    <span>Submitting Enquiry...</span>
+                    <span>{t.form.btnSubmitting}</span>
                   </>
                 ) : (
                   <>
-                    <span>Submit Enquiry</span>
+                    <span>{t.form.btnSubmit}</span>
                     <Send size={18} />
                   </>
                 )}
               </button>
 
               <p className="contact-form__privacy-note">
-                🔒 Your contact details are kept strictly private and used only for direct property consultation.
+                {t.form.privacyNote}
               </p>
             </form>
           </div>
