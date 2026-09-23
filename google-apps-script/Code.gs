@@ -1,39 +1,51 @@
 /**
  * Bheemarasetty Satyanarayana Real Estate - Google Apps Script Backend for Lead Capture
  * 
- * Target Google Sheet:
- * URL: https://docs.google.com/spreadsheets/d/1m9DHbTnzCNYMx6Rby6v3e9WdKXi8KAeC_UEroQtMTH4/edit?gid=0#gid=0
- * Sheet ID: 1m9DHbTnzCNYMx6Rby6v3e9WdKXi8KAeC_UEroQtMTH4
- * 
- * IMPORTANT DEPLOYMENT INSTRUCTIONS:
- * 1. Open your Google Sheet (https://docs.google.com/spreadsheets/d/1m9DHbTnzCNYMx6Rby6v3e9WdKXi8KAeC_UEroQtMTH4/edit).
- * 2. Click Extensions > Apps Script.
- * 3. Replace all code in Code.gs with this exact file and click Save (💾).
- * 4. Click Deploy > Manage deployments.
- * 5. Click the Edit (pencil) icon on your active deployment:
- *    - Set Version: "New version" (CRITICAL: if you don't choose "New version", old code remains active!)
- *    - Execute as: "Me"
- *    - Who has access: "Anyone" (CRITICAL: Must be "Anyone", NOT "Only myself")
- * 6. Click Deploy.
+ * Target Google Sheet ID: 1m9DHbTnzCNYMx6Rby6v3e9WdKXi8KAeC_UEroQtMTH4
  */
 
 var SPREADSHEET_ID = "1m9DHbTnzCNYMx6Rby6v3e9WdKXi8KAeC_UEroQtMTH4";
 
-function getTargetSheet() {
-  try {
-    if (SPREADSHEET_ID && SPREADSHEET_ID.trim() !== "") {
-      var ss = SpreadsheetApp.openById(SPREADSHEET_ID.trim());
-      return ss.getActiveSheet();
-    }
-  } catch (err) {
-    // If running container-bound
+// Test function: Select "testSheet" in the top bar and click ▶ Run to authorize permissions!
+function testSheet() {
+  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  var sheet = ss.getSheets()[0];
+  
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow([
+      "Date & Time",
+      "Customer Name",
+      "Phone Number",
+      "Preferred Call Time",
+      "Address / Location",
+      "Property Type",
+      "Status",
+      "Source URL"
+    ]);
   }
-  return SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  
+  sheet.appendRow([
+    new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
+    "B. Satyanarayana Test",
+    "'8897582265",
+    "10 AM – 12 PM",
+    "Thatichetlapalem, Visakhapatnam",
+    "Open Plot",
+    "New",
+    "Authorization Test"
+  ]);
+  
+  Logger.log("✅ Success! Test row added to Google Sheet!");
+}
+
+function getSheet() {
+  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  return ss.getSheets()[0];
 }
 
 function doPost(e) {
   try {
-    var sheet = getTargetSheet();
+    var sheet = getSheet();
     
     // Create header row if empty
     if (sheet.getLastRow() === 0) {
@@ -53,7 +65,6 @@ function doPost(e) {
       headerRange.setFontColor("#FFFFFF");
     }
 
-    // Parse data from either JSON postData or form parameters
     var data = {};
     if (e && e.postData && e.postData.contents) {
       try {
@@ -67,7 +78,7 @@ function doPost(e) {
 
     var timestamp = data.submittedAt || new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
     var name = data.name || "";
-    var phone = "'" + (data.phone || ""); // prefix with ' to preserve full 10-digit number format
+    var phone = "'" + (data.phone || "");
     var preferredCallTime = data.preferredCallTime || "";
     var address = data.address || "Not specified";
     var propertyType = data.propertyType || "";
@@ -103,7 +114,6 @@ function doGet(e) {
   return ContentService.createTextOutput(JSON.stringify({
     status: "online",
     service: "Bheemarasetty Satyanarayana Real Estate Lead Webhook",
-    spreadsheetId: SPREADSHEET_ID,
     timestamp: new Date().toISOString()
   })).setMimeType(ContentService.MimeType.JSON);
 }
