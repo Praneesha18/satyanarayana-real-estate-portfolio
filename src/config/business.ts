@@ -27,6 +27,7 @@ export interface BusinessConfig {
   googleMapsUrl: string;
   spreadsheetUrl: string;
   spreadsheetId: string;
+  googleAppsScriptUrl: string;
   photoUrl: string;
   whatsappMessages: {
     general: string;
@@ -68,8 +69,11 @@ export const BUSINESS_CONFIG: BusinessConfig = {
     "Pendurthi & Visakhapatnam Regions",
   ],
   googleMapsUrl: "https://maps.google.com/?q=Near+Santhoshimatha+Temple+Thatichetlapalem+Visakhapatnam+Andhra+Pradesh",
-  spreadsheetUrl: "https://docs.google.com/spreadsheets/d/1m9DHbTnzCNYMx6Rby6v3e9WdKXi8KAeC_UEroQtMTH4/edit?usp=drivesdk",
+  spreadsheetUrl: "https://docs.google.com/spreadsheets/d/1m9DHbTnzCNYMx6Rby6v3e9WdKXi8KAeC_UEroQtMTH4/edit?gid=0#gid=0",
   spreadsheetId: "1m9DHbTnzCNYMx6Rby6v3e9WdKXi8KAeC_UEroQtMTH4",
+  googleAppsScriptUrl:
+    import.meta.env.VITE_GOOGLE_APPS_SCRIPT_URL?.trim() ||
+    "https://script.google.com/macros/s/AKfycbzvn6HoPwpuHlj8N6njly81-tGKNzkfSZ3C2Hd6jwb6H-ZQNYHH7hhXIhs0-69pLd0l/exec",
   photoUrl: "/images/dad-photo.jpeg",
   whatsappMessages: {
     general: "Hello Satyanarayana garu, I am interested in exploring available properties in Visakhapatnam. Please share more details.",
