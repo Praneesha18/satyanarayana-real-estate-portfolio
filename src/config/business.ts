@@ -73,7 +73,7 @@ export const BUSINESS_CONFIG: BusinessConfig = {
   spreadsheetId: "1m9DHbTnzCNYMx6Rby6v3e9WdKXi8KAeC_UEroQtMTH4",
   googleAppsScriptUrl:
     import.meta.env.VITE_GOOGLE_APPS_SCRIPT_URL?.trim() ||
-    "https://script.google.com/macros/s/AKfycbzvn6HoPwpuHlj8N6njly81-tGKNzkfSZ3C2Hd6jwb6H-ZQNYHH7hhXIhs0-69pLd0l/exec",
+    "https://script.google.com/macros/s/AKfycbyKyrMPXLQR2Xr5X6fNYvmgwHjvOm7ur2eeE3uy7FNoH08k-c7ssOtDDCXQ_7zLf7gL/exec",
   photoUrl: "/images/dad-photo.jpeg",
   whatsappMessages: {
     general: "Hello Satyanarayana garu, I am interested in exploring available properties in Visakhapatnam. Please share more details.",
